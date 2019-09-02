@@ -60,7 +60,6 @@ namespace Util.BuildNugetPackage
         private Tuple<string, string> getNugetArgs(string csprojFilePath, string version, string buildMode, string argsNuspecPath)
         {
             FileInfo fileInfo_csproj = new System.IO.FileInfo(csprojFilePath);
-            string csProjFolder = fileInfo_csproj.Directory.FullName;
 
             string nuspecPath = string.Empty;
             if (string.IsNullOrWhiteSpace(argsNuspecPath) == false)
@@ -77,7 +76,9 @@ namespace Util.BuildNugetPackage
                 throw new Exception($"找不到 Nuget 配置文件。 路径:{nuspecPath}");
             }
 
-            string outputDirectory = System.IO.Path.Combine(csProjFolder, "bin", "NugetPackage");
+            // string outputDirectory = System.IO.Path.Combine(csProjFolder, "bin", "NugetPackage");
+            string outputDirectory = this.GetOutputDirectory(csprojFilePath);
+
             // r1 执行参数
             string r1 = $"pack \"{csprojFilePath}\" -BasePath \"{nuspecPath}\" -Version \"{version}\" -OutputDirectory \"{outputDirectory}\" -Build -Properties \"Configuration={buildMode}\"";
 
@@ -85,6 +86,19 @@ namespace Util.BuildNugetPackage
             string r2 = System.IO.Path.Combine(outputDirectory, $"{fileInfo_csproj.NameWithoutExtension()}.{version}.nupkg");
 
             return new Tuple<string, string>(r1, r2);
+        }
+
+        /// <summary>
+        /// 获取生成目录路径
+        /// </summary>
+        /// <param name="csprojFilePath"></param>
+        /// <returns></returns>
+        public string GetOutputDirectory(string csprojFilePath)
+        {
+            FileInfo fileInfo_csproj = new System.IO.FileInfo(csprojFilePath);
+            string csProjFolder = fileInfo_csproj.Directory.FullName;
+            string outputDirectory = System.IO.Path.Combine(csProjFolder, "bin", "NugetPackage");
+            return outputDirectory;
         }
 
         /// <summary>

@@ -27,7 +27,7 @@ namespace WPFBuildNugetPackage
         public MainWindow()
         {
             InitializeComponent();
-
+            this.Title = $"{this.Title} - V {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()}";
             this.mBuildNugetPackageFactory = new Util.BuildNugetPackage.BuildNugetFactory();
 
             initEvent();
@@ -41,7 +41,7 @@ namespace WPFBuildNugetPackage
             ucsfCSharpProject.SuccessEventHandler += new EventHandler<EventArgs>(ucsfCSharpProject_OnSuccess);
         }
 
-        string mConfigJsonPath = System.IO.Path.Combine(Environment.CurrentDirectory, "BuildApkCompileEnvironmentConfig.json");
+        string mConfigJsonPath = System.IO.Path.Combine(Environment.CurrentDirectory, "BuildNugetPackageCompileEnvironmentConfig.json");
 
         private void initData()
         {
@@ -173,6 +173,8 @@ namespace WPFBuildNugetPackage
                         buildMode: objArr[2] as string,
                         argsNuspecPath: objArr[3] as string
                     );
+
+                    bgArgs.Result = mBuildNugetPackageFactory.GetOutputDirectory(objArr[0] as string);
                 };
 
                 mBgWorker.RunWorkerCompleted += (bgSender, bgArgs) =>
@@ -185,6 +187,9 @@ namespace WPFBuildNugetPackage
                     else
                     {
                         ucConsole.Add(new Util.Model.ConsoleData("创建 NugetPackage 成功.", Util.Model.ConsoleMsgType.INFO));
+
+                        var openFolderPath = bgArgs.Result as string;
+                        System.Diagnostics.Process.Start(openFolderPath); // 用资源管理器打开
                     }
                 };
 
