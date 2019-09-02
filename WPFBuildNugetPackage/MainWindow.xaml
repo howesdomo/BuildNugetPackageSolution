@@ -1,0 +1,122 @@
+﻿<Window
+    x:Class="WPFBuildNugetPackage.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WPFBuildNugetPackage"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:Client.Components;assembly=WPFControls"
+    Title="Nuget打包"
+    Width="800"
+    Height="600"
+    mc:Ignorable="d">
+    <Grid x:Name="gRoot">
+        <Grid x:Name="gMain">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <uc:UcSelectFile
+                x:Name="ucsfMsbuild"
+                Title="选择msbuild.exe"
+                Grid.Row="0"
+                Filter="msbuild.exe|*.exe"
+                RegularExpressionFilter="msbuild.exe$" />
+
+            <uc:UcSelectFile
+                x:Name="ucsfNuget"
+                Title="选择nuget.exe"
+                Grid.Row="1"
+                Filter="nuget.exe|*.exe"
+                RegularExpressionFilter="nuget.exe$" />
+
+            <uc:UcSelectFile
+                x:Name="ucsfCSharpProject"
+                Title="选择编译项目"
+                Grid.Row="2"
+                Filter="CSharp项目|*.csproj" />
+
+            <uc:UcSelectFile
+                x:Name="ucsfNuspec"
+                Title="选填 - 选择 .nuspec"
+                Grid.Row="4"
+                Filter="nuspec文件|*.nuspec" />
+
+            <Grid
+                Grid.Row="3"
+                Margin="0,5,0,5">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Padding="5,0,5,0"
+                    Text="生成配置" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text=":" />
+                <ComboBox
+                    x:Name="cbBuildMode"
+                    Grid.Row="0"
+                    Grid.Column="2" />
+
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="0,5,0,5"
+                    Padding="5,0,5,0"
+                    Text="Nuget Version" />
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="0,5,0,5"
+                    Text=":" />
+                <TextBox
+                    x:Name="txtVersionName"
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Margin="0,5,0,5"
+                    Text="" />
+
+                <Border
+                    Grid.Row="3"
+                    Grid.ColumnSpan="3"
+                    Height="10"
+                    BorderBrush="Black" />
+            </Grid>
+
+            <Button
+                x:Name="btnBuild"
+                Grid.Row="7"
+                Content="一键生成" />
+
+            <uc:UcConsole
+                x:Name="ucConsole"
+                Grid.Row="11" />
+        </Grid>
+        <uc:UcWait x:Name="ucWait" />
+    </Grid>
+</Window>
