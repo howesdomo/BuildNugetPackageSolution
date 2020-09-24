@@ -3,6 +3,12 @@ using System.IO;
 
 namespace Util.BuildNugetPackage
 {
+    /// <summary>
+    /// V 1.0.1 - 2020-09-24 11:32:31
+    /// 由于Nuget.exe pack 方式目前无法支持 C# 6.0 的 $ 语法 ( 例如  $"Code:{mCode}" )
+    /// 会报错 error CS1056: 意外的字符 “$”
+    /// 解决方案是为 Nuget.exe 指定 -MSBuild
+    /// </summary>
     public class BuildNugetFactory
     {
         #region Nuget 环境配置路径
@@ -34,7 +40,9 @@ namespace Util.BuildNugetPackage
             string cleanArgs = $"{csprojFilePath} -target:Clean -property:Configuration={buildMode}";
             string rebuildArgs = $"{csprojFilePath} -target:Rebuild -property:Configuration={buildMode}";
 
-            Tuple<string,string> nugetTupleResult = getNugetArgs(csprojFilePath, version, buildMode, argsNuspecPath);
+            var argsMSBuildPath = new FileInfo(msbuild).Directory.FullName;
+
+            Tuple<string,string> nugetTupleResult = getNugetArgs(csprojFilePath, version, buildMode, argsNuspecPath, argsMSBuildPath);
             string nugetArgs = nugetTupleResult.Item1;
             string nugetPackageFilePath = nugetTupleResult.Item2;
 
@@ -57,7 +65,7 @@ namespace Util.BuildNugetPackage
         /// <param name="version">Nuget Package 版本号</param>
         /// <param name="argsNuspecPath">用户自定义 nuspec 配置文件</param>
         /// <returns></returns>
-        private Tuple<string, string> getNugetArgs(string csprojFilePath, string version, string buildMode, string argsNuspecPath)
+        private Tuple<string, string> getNugetArgs(string csprojFilePath, string version, string buildMode, string argsNuspecPath, string argsMsBuildPath)
         {
             FileInfo fileInfo_csproj = new System.IO.FileInfo(csprojFilePath);
 
@@ -80,7 +88,7 @@ namespace Util.BuildNugetPackage
             string outputDirectory = this.GetOutputDirectory(csprojFilePath);
 
             // r1 执行参数
-            string r1 = $"pack \"{csprojFilePath}\" -BasePath \"{nuspecPath}\" -Version \"{version}\" -OutputDirectory \"{outputDirectory}\" -Build -Properties \"Configuration={buildMode}\"";
+            string r1 = $"pack \"{csprojFilePath}\" -BasePath \"{nuspecPath}\" -Version \"{version}\" -OutputDirectory \"{outputDirectory}\" -Build -Properties \"Configuration={buildMode}\" -MSBuildPath \"{argsMsBuildPath}\"";
 
             // r2 检测生成文件
             string r2 = System.IO.Path.Combine(outputDirectory, $"{fileInfo_csproj.NameWithoutExtension()}.{version}.nupkg");
