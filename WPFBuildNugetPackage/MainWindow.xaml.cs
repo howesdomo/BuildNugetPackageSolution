@@ -114,16 +114,16 @@ namespace WPFBuildNugetPackage
 
             if (ucsfNuget.IsSuccess == false)
             {
-                return new Tuple<bool, string>(false, "请选择Jarsigner");
+                return new Tuple<bool, string>(false, "请选择nuget.exe");
             }
 
-            this.buildApkFactorySetConfig();
+            this.buildNugetFactorySetConfig();
             this.saveConfig();
 
             return new Tuple<bool, string>(true, string.Empty);
         }
 
-        private void buildApkFactorySetConfig()
+        private void buildNugetFactorySetConfig()
         {
             mBuildNugetPackageFactory.SetMsbuild(ucsfMsbuild.FileName);
             mBuildNugetPackageFactory.SetNuget(ucsfNuget.FileName);
