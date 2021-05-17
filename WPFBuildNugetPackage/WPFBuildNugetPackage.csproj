@@ -52,14 +52,14 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Util.HowesDOMO, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Util.HowesDOMO.1.0.3\lib\net40\Util.HowesDOMO.dll</HintPath>
+    <Reference Include="Util.HowesDOMO, Version=1.0.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Util.HowesDOMO.1.0.18-alpha8\lib\net40\Util.HowesDOMO.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WPFControls, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WPFControls.1.0.2\lib\net40\WPFControls.dll</HintPath>
+    <Reference Include="WPFControls, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFControls.1.0.8-alpha1\lib\net40\WPFControls.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
