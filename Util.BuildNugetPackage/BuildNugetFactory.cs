@@ -35,7 +35,7 @@ namespace Util.BuildNugetPackage
         /// <param name="csprojFilePath">.csproj 文件路径</param>
         /// <param name="version">Nuget Package 版本号</param>
         /// <param name="argsNuspecPath">用户自定义 nuspec 配置文件</param>
-        public void CreateNugetPackage(string csprojFilePath, string version, string buildMode, string argsNuspecPath = "")
+        public string CreateNugetPackage(string csprojFilePath, string version, string buildMode, string argsNuspecPath = "")
         {
             string cleanArgs = $"{csprojFilePath} -target:Clean -property:Configuration={buildMode}";
             string rebuildArgs = $"{csprojFilePath} -target:Rebuild -property:Configuration={buildMode}";
@@ -56,6 +56,8 @@ namespace Util.BuildNugetPackage
             {
                 throw new Exception($"生成失败。文件不存在：{nugetPackageFilePath}");
             }
+
+            return nugetPackageFilePath;
         }
 
         /// <summary>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace WPFBuildNugetPackage
 {
@@ -166,7 +167,7 @@ namespace WPFBuildNugetPackage
                 mBgWorker.DoWork += (bgSender, bgArgs) =>
                 {
                     object[] objArr = bgArgs.Argument as object[];
-                    mBuildNugetPackageFactory.CreateNugetPackage
+                    string nupkgFilePath = mBuildNugetPackageFactory.CreateNugetPackage
                     (
                         csprojFilePath: objArr[0] as string,
                         version: objArr[1] as string,
@@ -174,7 +175,7 @@ namespace WPFBuildNugetPackage
                         argsNuspecPath: objArr[3] as string
                     );
 
-                    bgArgs.Result = mBuildNugetPackageFactory.GetOutputDirectory(objArr[0] as string);
+                    bgArgs.Result = nupkgFilePath;
                 };
 
                 mBgWorker.RunWorkerCompleted += (bgSender, bgArgs) =>
@@ -188,8 +189,20 @@ namespace WPFBuildNugetPackage
                     {
                         ucConsole.Add(new Util.Model.ConsoleData("创建 NugetPackage 成功.", Util.Model.ConsoleMsgType.INFO));
 
-                        var openFolderPath = bgArgs.Result as string;
-                        System.Diagnostics.Process.Start(openFolderPath); // 用资源管理器打开
+                        var paht_CopyFrom = bgArgs.Result as string;
+
+                        var folderPath = new FileInfo(ucsfCSharpProject.FileName).NameWithoutExtension();
+                        var fileName = new System.IO.FileInfo(paht_CopyFrom).Name;
+                        var path_CopyTo = $@"D:\Nuget\OfflineDebugPackages\{folderPath}\{fileName}";
+
+                        var fi_copyTo = new FileInfo(path_CopyTo);
+                        if (fi_copyTo.Directory.Exists == false)
+                        {
+                            fi_copyTo.Directory.Create();
+                        }
+
+                        System.IO.File.Copy(paht_CopyFrom, path_CopyTo);
+                        System.Diagnostics.Process.Start(fi_copyTo.Directory.FullName); // 用资源管理器打开
                     }
                 };
 
