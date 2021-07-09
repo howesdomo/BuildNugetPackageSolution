@@ -119,6 +119,6 @@
                 x:Name="ucConsole"
                 Grid.Row="11" />
         </Grid>
-        <uc:UcWait x:Name="ucWait" />
+        <uc:UcBusyIndicator x:Name="ucWait" />
     </Grid>
 </Window>

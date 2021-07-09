@@ -21,6 +21,8 @@ namespace WPFBuildNugetPackage
     /// </summary>
     public partial class MainWindow : Window
     {
+        // TODO 读取最新的 nupkg 文件的版本号, 自动加1
+
         Util.BuildNugetPackage.BuildNugetFactory mBuildNugetPackageFactory { get; set; }
 
         System.ComponentModel.BackgroundWorker mBgWorker { get; set; }
@@ -201,7 +203,7 @@ namespace WPFBuildNugetPackage
                             fi_copyTo.Directory.Create();
                         }
 
-                        System.IO.File.Copy(paht_CopyFrom, path_CopyTo);
+                        System.IO.File.Copy(paht_CopyFrom, path_CopyTo, overwrite: true);
                         System.Diagnostics.Process.Start(fi_copyTo.Directory.FullName); // 用资源管理器打开
                     }
                 };
