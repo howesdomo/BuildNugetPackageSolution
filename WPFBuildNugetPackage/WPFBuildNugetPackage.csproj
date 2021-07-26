@@ -59,7 +59,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WPFControls, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WPFControls.1.0.8-beta1\lib\net40\WPFControls.dll</HintPath>
+      <HintPath>..\packages\WPFControls.1.0.8-beta7\lib\net40\WPFControls.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

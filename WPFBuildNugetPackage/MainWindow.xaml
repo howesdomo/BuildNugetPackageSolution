@@ -117,7 +117,8 @@
 
             <uc:UcConsole
                 x:Name="ucConsole"
-                Grid.Row="11" />
+                Grid.Row="11"
+                AutoScroolToBottom_DiffValue="5" />
         </Grid>
         <uc:UcBusyIndicator x:Name="ucWait" />
     </Grid>
